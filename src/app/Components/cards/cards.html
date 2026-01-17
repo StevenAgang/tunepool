@@ -1,0 +1,57 @@
+<section class="glass-card">
+  @if(place >= 0 && place <= 3){
+  <section class="absolute -top-4 -right-2 rounded-[2.5rem] z-10">
+    <span [class]="'badge-rank ' + color">{{ text }}</span>
+  </section>
+  }
+  <section class="play-list-art">
+    <figure class="w-full h-full">
+      <img [src]="img" alt="" class="w-full h-full object-cover" />
+    </figure>
+
+    <section class="absolute bg-linear-to-r from-red-900 to-red-400 top-4 left-2 rounded-2xl z-10">
+      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Youtube</span>
+    </section>
+
+    <section class="play-overlay">
+      <section
+        class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-10 h-10 text-indigo-900 ml-1"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </section>
+    </section>
+  </section>
+  <section class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
+    <span
+      class="px-4 py-1.5 bg-pink-500/20 text-pink-300 rounded-full text-xs font-bold uppercase tracking-wider border border-pink-500/30"
+      >Vibe</span
+    >
+    <span
+      class="px-4 py-1.5 bg-indigo-500/20 text-indigo-300 rounded-full text-xs font-bold uppercase tracking-wider border border-indigo-500/30"
+      >Chill</span
+    >
+  </section>
+  <h3 class="text-2xl font-bold mb-2">Cybercity Midnight</h3>
+  <p class="text-indigo-200/50 italic mb-6 line-clamp-3">
+    "Drenched in synths and city lights. For those 2AM drives through neon districts."
+  </p>
+  <section class="flex items-center justify-between pt-4 border-t border-white/5">
+    <section class="flex gap-4">
+      <section class="flex items-center gap-1">
+        <span class="text-xl">💖</span>
+        <span class="font-bold">12.4k</span>
+      </section>
+      <section class="flex items-center gap-1">
+        <span class="text-xl">👍</span>
+        <span class="font-bold">20k</span>
+      </section>
+    </section>
+  </section>
+</section>

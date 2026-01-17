@@ -1,0 +1,16 @@
+<app-navbar class="flex flex-row justify-center"></app-navbar>
+<header class="text-center px-5">
+  <h2 class="text-5xl font-extrabold mb-6 leading-tight">
+    Weekly <span class="italic font-serif opacity-80">Chart</span> Toppers.
+  </h2>
+  <p class="text-indigo-200/60 max-w-2xl mx-auto text-lg">
+    The community's favorite soundscapes. Vote, share, and discover your next obsession.
+  </p>
+</header>
+<main
+  class="mt-10 px-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20"
+>
+  <app-cards [content]="'1'" [background-color]="badgeColor['gold']" [place]="1"> </app-cards>
+  <app-cards [content]="'2'" [background-color]="badgeColor['silver']" [place]="2"> </app-cards>
+  <app-cards [content]="'3'" [background-color]="badgeColor['bronze']" [place]="3"> </app-cards>
+</main>
