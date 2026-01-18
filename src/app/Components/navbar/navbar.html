@@ -20,7 +20,7 @@
     </span>
     <h1 class="text-sp mx-2 text-3xl font-extrabold tracking-tighter">
       Tune<span
-        class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+        class="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
         >Pool</span
       >
     </h1>
@@ -28,6 +28,7 @@
 
   <button
     class="bg-indigo-500 px-6 py-3 rounded-full font-bold text-sm flex items-center gap-2 text-white btn-primary"
+    (click)="triggerModal()"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

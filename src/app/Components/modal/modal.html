@@ -1,0 +1,88 @@
+<section
+  class="fixed bg-indigo-950/80 backdrop-blur-md top-0 left-0 right-0 h-screen flex items-center justify-center"
+  [ngClass]="{ 'modal-close': visible }"
+  (click)="closed()"
+>
+  <section
+    class="model-content glass-card w-full max-w-lg rounded-[2.5rem ] p-8 shadow-2xl border-indigo-400/20 max-h-[90] overflow-y-auto z-50"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      class="absolute top-6 right-6 text-indigo-300/50 hover:text-white transition-colors cursor-pointer"
+      (click)="closed()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <h1 class="text-sp text-3xl font-extrabold tracking-tighter">
+      Share the
+      <span
+        class="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+        >Vibe</span
+      >
+    </h1>
+    <p class="text-indigo-200/50">Add your playlist to the pool and let the community dive in.</p>
+    <form class="flex flex-col rounded-md gap-3 my-5 w-full">
+      <label for="playListLink" class="label-design"> Play List Link </label>
+      <input
+        type="text"
+        name="playListLink"
+        id="playListLink"
+        class="input-design"
+        placeholder="https://open.spotify.com/playlist/..."
+      />
+      <label for="title" class="label-design">playlist title</label>
+      <input type="text" name="title" placeholder="Midnight Melodies" class="input-design" />
+      @if(tags){
+      <label class="label-design">Select Mood Tags (Multiple)</label>
+      <section id="tags" class="flex gap-2 flex-wrap w-full mb-2">
+        @for(tag of tags; track tag){
+        <span [ngClass]="{ 'tag-design': true }" onclick="this.classList.toggle('active')">{{
+          tag
+        }}</span>
+        }
+      </section>
+      }
+      <label for="description" class="label-design">Vibe Description</label>
+      <input
+        type="text"
+        name="description"
+        id="description"
+        class="input-design"
+        placeholder="Tell us about the mood..."
+      />
+      <button
+        type="button"
+        class="bg-indigo-500 px-6 py-3 rounded-full font-bold text-md flex items-center gap-2 text-white btn-primary justify-center tracking-wider"
+      >
+        <span>Dive In</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </button>
+    </form>
+  </section>
+</section>
