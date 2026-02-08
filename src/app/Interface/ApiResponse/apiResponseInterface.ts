@@ -3,4 +3,5 @@ export interface apiResponseInterface<T> {
   success: boolean;
   message?: string;
   content?: T;
+  lastPage?: boolean;
 }

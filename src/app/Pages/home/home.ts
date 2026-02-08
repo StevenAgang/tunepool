@@ -65,7 +65,6 @@ export class Home {
     this.client.getAll(this.paginationPage.getId()).subscribe((response) => {
       this.listing = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
       this.paginationPage.setId(this.listing.length || 0);
-      console.log(this.paginationPage.getId());
     });
 
     this.client.getAllTags().subscribe((response) => {
@@ -76,13 +75,15 @@ export class Home {
   cursorPagination() {
     this.client.getAll(this.paginationPage.getId()).subscribe((response) => {
       var newListing = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
-      console.log(this.paginationPage.getPage());
-      if (newListing.length == 0) {
+      var lastPage = (response as apiResponseInterface<Array<playlistInterface>>).lastPage || false;
+      this.listing = [...this.listing, ...newListing];
+      this.paginationPage.setId(this.listing.length || 0);
+
+      console.log((response as apiResponseInterface<Array<playlistInterface>>).lastPage);
+      if (lastPage) {
         this.paginationPage.setPage(true);
         return;
       }
-      this.listing = [...this.listing, ...newListing];
-      this.paginationPage.setId(this.listing.length || 0);
     });
   }
 }
