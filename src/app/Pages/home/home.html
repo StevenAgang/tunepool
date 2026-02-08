@@ -8,40 +8,42 @@
   </p>
 </header>
 <main>
-  @if(post.length){
-  <section
-    class="mt-10 px-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20"
-  >
-    @for(posts of post; track posts){
-    <app-cards [playList]="posts"></app-cards>
-    }
-  </section>
+  @if (post.length) {
+    <section
+      class="mt-10 px-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20"
+    >
+      @for (posts of post; track posts.id) {
+        <app-cards [playList]="posts"></app-cards>
+      }
+    </section>
   } @else {
-  <section class="w-full text-center my-20">
-    <h1 class="font-extrabold text-4xl leading-tight tracking-wide px-5">
-      Claim your spot as the ultimate
-      <span class="italic font-serif opacity-80">Playlist</span> Sharer.
-    </h1>
-  </section>
-  } @if(listing.length){
-  <section class="max-w-7xl mx-auto px-10">
-    <form class="w-full">
-      <input
-        type="text"
-        name="search"
-        placeholder="Search for Title, Description and Tags"
-        class="w-full border-indigo-400 border py-2 px-3 tracking-wider rounded-md"
-      />
-    </form>
-  </section>
-  <section
-    class="mt-10 px-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20 relative"
-  >
-    @for(list of listing; track listing){
-    <app-cards [playList]="list"></app-cards>
-    }
+    <section class="w-full text-center my-20">
+      <h1 class="font-extrabold text-4xl leading-tight tracking-wide px-5">
+        Claim your spot as the ultimate
+        <span class="italic font-serif opacity-80">Playlist</span> Sharer.
+      </h1>
+      <p class="leading-tight tracking-wide font-semibold">Weekly ranking updates — stay ahead</p>
+    </section>
+  }
+  @if (listing.length) {
+    <section class="max-w-7xl mx-auto px-10">
+      <form class="w-full">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search for Title, Description and Tags"
+          class="w-full border-indigo-400 border py-2 px-3 tracking-wider rounded-md"
+        />
+      </form>
+    </section>
+    <section
+      class="mt-10 px-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20 relative"
+    >
+      @for (list of listing; track list.id) {
+        <app-cards [playList]="list"></app-cards>
+      }
 
-    <!-- <section class="items-center absolute bottom-0 right-0 py-5">
+      <!-- <section class="items-center absolute bottom-0 right-0 py-5">
       @for(page of pagination.slice(0, 5); track page){
       <span
         class="font-bold text-xl hover:bg-linear-to-br from-gray-300 to-gray-600 py-1 px-2 rounded-sm cursor-pointer"
@@ -49,14 +51,33 @@
       </span>
       }
     </section> -->
-  </section>
+    </section>
   } @else {
-  <section class="w-full text-center my-20">
-    <h2 class="font-bold px-5 my-70 text-3xl tracking-wider">
-      No playlists yet — start the trend by sharing yours!
-    </h2>
-  </section>
+    <section class="w-full text-center my-20">
+      <h2 class="font-bold px-5 my-70 text-3xl tracking-wider">
+        No playlists yet — start the trend by sharing yours!
+      </h2>
+    </section>
   }
-
+  @if (paginationPage.getPage() == false) {
+    <section
+      id="loadData"
+      (click)="cursorPagination()"
+      class="pointer-cursor cursor-pointer outline-indigo-900/50 rounded-full w-15 h-15 mx-auto my-5 p-2 flex justify-center shadow-lg transition-transform hover:shadow-2xl hover:scale-105 hover:outline-solid duration-200 bg-indigo-900/20"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 320 512"
+        fill="currentColor"
+        width="50"
+        height="50"
+        class="mx-auto text-indigo-500"
+      >
+        <path
+          d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"
+        />
+      </svg>
+    </section>
+  }
   <app-modal [tags]="tags" [visible]="modalVisible" (close)="closeModal()"></app-modal>
 </main>

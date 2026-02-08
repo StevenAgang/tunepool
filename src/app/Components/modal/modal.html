@@ -1,10 +1,10 @@
 <section
-  class="fixed bg-indigo-950/80 backdrop-blur-md top-0 left-0 right-0 h-screen flex items-center justify-center"
+  class="fixed inset-0 bg-indigo-950/80 p-4 backdrop-blur-md flex items-center justify-center z-50"
   [ngClass]="{ 'modal-close': visible }"
   (click)="closed()"
 >
   <section
-    class="model-content glass-card w-full max-w-lg rounded-[2.5rem ] p-8 shadow-2xl border-indigo-400/20 max-h-[90] overflow-y-auto z-50"
+    class="model-content glass-card w-full max-w-lg rounded-[2.5rem] mx-2 my-5 p-8 shadow-2xl border-indigo-400/20 max-h-[75vh] overflow-y-auto no-scrollbar"
     (click)="$event.stopPropagation()"
   >
     <button
@@ -35,7 +35,27 @@
     </h1>
     <p class="text-indigo-200/50">Add your playlist to the pool and let the community dive in.</p>
     <form class="flex flex-col rounded-md gap-3 my-5 w-full">
-      <label for="playListLink" class="label-design"> Play List Link </label>
+      <label for="playListLink" class="label-design flex justify-between items-center">
+        Play List Link
+
+        <button
+          data-tooltip-target="tooltip-default"
+          type="button"
+          class="text-indigo-300/50 bg-indigo-950/20 box-border border border-transparent hover:bg-indigo-950/80 focus:ring-4 focus:ring-brand-medium shadow-xs font-extrabold leading-5 rounded-full text-xs px-1 py-1 focus:outline-none"
+        >
+          ?
+        </button>
+
+        <section
+          id="tooltip-default"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-indigo-950/90 rounded-md shadow-xs opacity-0"
+        >
+          Thumbnail will be fetched automatically via the service provider’s API. If unavailable,
+          TunePool will generate one for you.
+          <section class="tooltip-arrow" data-popper-arrow></section>
+        </section>
+      </label>
       <input
         type="text"
         name="playListLink"
@@ -45,24 +65,22 @@
       />
       <label for="title" class="label-design">playlist title</label>
       <input type="text" name="title" placeholder="Midnight Melodies" class="input-design" />
-      @if(tags){
-      <label class="label-design">Select Mood Tags (Multiple)</label>
-      <section id="tags" class="flex gap-2 flex-wrap w-full mb-2">
-        @for(tag of tags; track tag){
-        <span [ngClass]="{ 'tag-design': true }" onclick="this.classList.toggle('active')">{{
-          tag
-        }}</span>
-        }
-      </section>
+      @if (tags) {
+        <label class="label-design">Select Mood Tags (Max is Five)</label>
+        <section id="tags" class="flex gap-2 flex-wrap w-full mb-2">
+          @for (tag of tags; track tag.id) {
+            <span [ngClass]="{ 'tag-design': true }" onclick="this.classList.toggle('active')">{{
+              tag.name
+            }}</span>
+          }
+        </section>
       }
       <label for="description" class="label-design">Vibe Description</label>
-      <input
-        type="text"
-        name="description"
+      <textarea
         id="description"
         class="input-design"
         placeholder="Tell us about the mood..."
-      />
+      ></textarea>
       <button
         type="button"
         class="bg-indigo-500 px-6 py-3 rounded-full font-bold text-md flex items-center gap-2 text-white btn-primary justify-center tracking-wider"

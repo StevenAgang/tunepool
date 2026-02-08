@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
+import { tagsInterface } from '../../Interface/Playlist/playlistInterface';
 
 @Component({
   selector: 'app-modal',
@@ -8,9 +9,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './modal.css',
 })
 export class Modal {
+  tagCount: number = 0;
   tagActive: boolean = false;
   @Input('visible') visible: boolean = true;
-  @Input('tags') tags!: Array<string>;
+  @Input('tags') tags!: tagsInterface[];
   @Output('close') close = new EventEmitter<void>();
 
   turnActive() {
@@ -23,7 +25,6 @@ export class Modal {
     this.tagActive = true;
   }
   closed() {
-    console.log(this.visible);
     this.close.emit();
   }
   ngOnInit() {

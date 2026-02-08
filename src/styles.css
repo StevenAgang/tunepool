@@ -31,13 +31,15 @@
     ease-[cubic-bezier(0.175,0.885,0.32,1.275)] 
     my-5
     relative
-    hover:-translate-y-8
-    hover:scale-[1.02]
     hover:border
     hover:bg-[rgba(255,255,255,0.07)]
     hover:border-[rgba(255,255,255,0.2)]
     hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]
     hover:opacity-100;
+  }
+  .glass-hover {
+    @apply hover:-translate-y-8
+    hover:scale-[1.02];
   }
 
   .badge-rank {
@@ -129,6 +131,10 @@
     uppercase
     hover:scale-[0.9];
   }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes firstRank {

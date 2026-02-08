@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Navbar } from '../../Components/navbar/navbar';
 import { Cards } from '../../Components/cards/cards';
 import { Modal } from '../../Components/modal/modal';
+import { PlaylistService } from '../../Service/Playlist/playlistService';
+import { apiResponseInterface } from '../../Interface/ApiResponse/apiResponseInterface';
+import { playlistInterface, tagsInterface } from '../../Interface/Playlist/playlistInterface';
+import { PaginationPage } from '../../Shared/PaginationPage';
 
 @Component({
   selector: 'app-home',
@@ -10,122 +14,75 @@ import { Modal } from '../../Components/modal/modal';
   styleUrl: './home.css',
 })
 export class Home {
+  protected post: Array<{
+    id: number;
+    title: string;
+    description: string;
+    playList_Urls: string;
+    thumbnail: string;
+    tags: [{ id: number; name: string }];
+    popularity: [{ playlist_id: number; hearts: number; likes: number; rank: number }];
+    platform: { id: number; name: string };
+  }> = [];
+
+  protected listing: Array<{
+    id: number;
+    title: string;
+    description: string;
+    playList_Urls: string;
+    thumbnail: string;
+    tags: [{ id: number; name: string }];
+    popularity: [{ playlist_id: number; hearts: number; likes: number; rank: number }];
+    platform: { id: number; name: string };
+  }> = [];
+
+  protected tags: Array<{ id: number; name: string }> = [];
+
   modalVisible: boolean = true;
+
   openModal() {
-    console.log(this.modalVisible);
+    document.body.style.overflow = 'hidden';
     this.modalVisible = false;
   }
+
   closeModal() {
-    console.log(this.modalVisible);
+    document.body.style.overflow = 'auto';
     this.modalVisible = true;
   }
-  badgeColor: { [key: string]: string } = {
-    gold: 'bg-linear-to-br from-yellow-300 to-yellow-600',
-    silver: 'bg-linear-to-br from-gray-300 to-gray-600',
-    bronze: 'bg-linear-to-br from-yellow-800 to-red-600',
-  };
 
   pagination: Array<number> = [1, 2, 3, 4, 5, 6, 8, 9, 10];
 
-  tags: Array<string> = ['Lofi', 'Syntethic'];
+  constructor(
+    private client: PlaylistService,
+    public paginationPage: PaginationPage,
+  ) {}
 
-  post: Array<{
-    title: string;
-    subtitle: string;
-    imgSrc: string;
-    tags: string[];
-    hearts: number;
-    likes: number;
-    platform: string;
-    rank: number;
-    bgColor: string;
-    link: string;
-  }> = [
-    {
-      title: 'Cybercity Midnight',
-      subtitle: 'Drenched in synths and city lights. For those 2AM drives through neon districts.',
-      imgSrc: 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png',
-      tags: ['Vibe', 'Chill'],
-      hearts: 12400,
-      likes: 21234,
-      platform: 'youtubemusic',
-      rank: 1,
-      bgColor: this.badgeColor['gold'],
-      link: 'https://music.youtube.com/playlist?list=PLTull_1lcSyr5tngo4ul7gCAJjH8Td6Or&si=HkwC2fZHnrdr0c_P',
-    },
-    {
-      title: 'Programmer Chill',
-      subtitle: 'Drenched in synths and city lights. For those 2AM drives through neon districts.',
-      imgSrc: 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png',
-      tags: ['Energizer', 'Focus'],
-      hearts: 12400,
-      likes: 20000,
-      platform: 'spotify',
-      rank: 2,
-      bgColor: this.badgeColor['silver'],
-      link: 'https://open.spotify.com/playlist/4HjyFX2PH4o6pTFyCyurQO',
-    },
-    {
-      title: 'Late Night Music',
-      subtitle: 'Drenched in synths and city lights. For those 2AM drives through neon districts.',
-      imgSrc: 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png',
-      tags: ['Sleepy', 'Good Mood'],
-      hearts: 12400,
-      likes: 20000,
-      platform: 'applemusic',
-      rank: 3,
-      bgColor: this.badgeColor['bronze'],
-      link: 'https://music.apple.com/us/playlist/vol-de-nuit/pl.faeb447ec5a341ef83e7e65189bd1c63',
-    },
-  ];
+  ngOnInit() {
+    this.client.getRanking().subscribe((response) => {
+      this.post = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
+    });
 
-  listing: Array<{
-    title: string;
-    subtitle: string;
-    imgSrc: string;
-    tags: string[];
-    hearts: number;
-    likes: number;
-    platform: string;
-    rank: number;
-    bgColor: string;
-    link: string;
-  }> = [
-    {
-      title: 'Cybercity Midnight',
-      subtitle: 'Drenched in synths and city lights. For those 2AM drives through neon districts.',
-      imgSrc: 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png',
-      tags: ['Vibe', 'Chill'],
-      hearts: 12400,
-      likes: 20000,
-      platform: 'youtubemusic',
-      rank: 0,
-      bgColor: this.badgeColor['gold'],
-      link: 'https://music.youtube.com/playlist?list=PLTull_1lcSyr5tngo4ul7gCAJjH8Td6Or&si=HkwC2fZHnrdr0c_P',
-    },
-    {
-      title: 'Programmer Chill',
-      subtitle: 'Drenched in synths and city lights. For those 2AM drives through neon districts.',
-      imgSrc: 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png',
-      tags: ['Energizer', 'Focus'],
-      hearts: 12400,
-      likes: 20000,
-      platform: 'spotify',
-      rank: 0,
-      bgColor: this.badgeColor['silver'],
-      link: 'https://open.spotify.com/playlist/4HjyFX2PH4o6pTFyCyurQO',
-    },
-    {
-      title: 'Late Night Music',
-      subtitle: 'Drenched in synths and city lights. For those 2AM drives through neon districts.',
-      imgSrc: 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png',
-      tags: ['Sleepy', 'Good Mood'],
-      hearts: 12400,
-      likes: 20000,
-      platform: 'applemusic',
-      rank: 0,
-      bgColor: this.badgeColor['bronze'],
-      link: 'https://music.apple.com/us/playlist/vol-de-nuit/pl.faeb447ec5a341ef83e7e65189bd1c63',
-    },
-  ];
+    this.client.getAll(this.paginationPage.getId()).subscribe((response) => {
+      this.listing = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
+      this.paginationPage.setId(this.listing.length || 0);
+      console.log(this.paginationPage.getId());
+    });
+
+    this.client.getAllTags().subscribe((response) => {
+      this.tags = (response as apiResponseInterface<Array<tagsInterface>>).content || [];
+    });
+  }
+
+  cursorPagination() {
+    this.client.getAll(this.paginationPage.getId()).subscribe((response) => {
+      var newListing = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
+      console.log(this.paginationPage.getPage());
+      if (newListing.length == 0) {
+        this.paginationPage.setPage(true);
+        return;
+      }
+      this.listing = [...this.listing, ...newListing];
+      this.paginationPage.setId(this.listing.length || 0);
+    });
+  }
 }

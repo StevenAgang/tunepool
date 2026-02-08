@@ -1,126 +1,132 @@
-@if(items){
-<section class="glass-card">
-  @if(items.rank > 0 && items.rank < 4){
-  <section class="absolute -top-4 -right-2 rounded-[2.5rem] z-10">
-    <span
-      [ngClass]="{
-        'badge-rank': true,
-        'glowing-anim': items.rank === 1,
-      }"
-      [class]="items.bgColor"
-      >{{ items.rank }}</span
-    >
-  </section>
-  }
-  <section class="play-list-art">
-    <figure class="w-full h-full">
-      <img [src]="items.imgSrc" alt="" class="w-full h-full object-cover" />
-    </figure>
-    @switch (items.platform) { @case('spotify') {
-    <section
-      class="absolute bg-linear-to-r from-[#1DB954] via-[#1ED760] to-[#191414]] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Spotify</span>
-    </section>
-
-    } @case('youtube') {
-    <section class="absolute bg-linear-to-r from-red-900 to-red-400 top-4 left-2 rounded-2xl z-10">
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Youtube</span>
-    </section>
-    } @case('soundcloud') {
-    <section
-      class="absolute bg-linear-to-r from-[#FF5500] via-[#333333] to-[#F2F2F2] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Sound Cloud</span>
-    </section>
-    } @case('applemusic') {
-    <section
-      class="absolute bg-linear-to-r from-[#FF4E6B] via-[#FF0436] to-[#FFFFFF] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Apple Music</span>
-    </section>
-    } @case('deezer') {
-    <section
-      class="absolute bg-linear-to-r from-[#A238FF] via-[#1B191F] to-[#FFFFFF] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Deezer</span>
-    </section>
-    } @case ('tidal') {
-    <section
-      class="absolute bg-linear-to-r from-[#000000] via-[#FFFFFF] to-[#00FFFF] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Tidal</span>
-    </section>
-    } @case ('amazonmusic') {
-    <section
-      class="absolute bg-linear-to-r from-[#FF6200] via-[#FF9946 ] to-[#000000] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Amazon Music</span>
-    </section>
-    } @case ('pandora') {
-    <section
-      class="absolute bg-linear-to-r from-[#224099] via-[#00A0EE] to-[#FFFFFF] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Pandora</span>
-    </section>
-    } @case ('youtubemusic') {
-    <section class="absolute bg-linear-to-r from-red-900 to-red-400 top-4 left-2 rounded-2xl z-10">
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">YouTube Music</span>
-    </section>
-    } @case ('mixcloud') {
-    <section
-      class="absolute bg-linear-to-r from-[#5000FF] via-[#F69AE4] to-[#171C2B] top-4 left-2 rounded-2xl z-10"
-    >
-      <span class="p-2 rounded-[2.5rem] text-sm font-bold">Mix Cloud</span>
-    </section>
-    } }
-    <section class="play-overlay">
-      <a
-        href="{{ items.link }}"
-        target="_blank"
-        class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 cursor-pointer decoration-0"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-10 h-10 text-indigo-900 ml-1"
-          fill="currentColor"
-          viewBox="0 0 24 24"
+@if (items) {
+  <section class="glass-card glass-hover">
+    @if (items.popularity[0].rank > 0 && items.popularity[0].rank < 4) {
+      <section class="absolute -top-4 -right-2 rounded-[2.5rem] z-10">
+        <span
+          [ngClass]="{
+            'badge-rank': true,
+            'glowing-anim': items.popularity[0].rank === 1,
+          }"
+          [class]="
+            items.popularity[0].rank === 1
+              ? 'bg-linear-to-br from-yellow-300 to-yellow-600'
+              : items.popularity[0].rank === 2
+                ? 'bg-linear-to-br from-gray-300 to-gray-600'
+                : 'bg-linear-to-br from-yellow-800 to-red-600'
+          "
+          >{{ items.popularity[0].rank }}</span
         >
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      </a>
-    </section>
-  </section>
-  <section class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
-    @for(tags of items.tags; track tags){
-    <span
-      class="px-4 py-1.5 bg-pink-500/20 text-pink-300 rounded-full text-xs font-bold uppercase tracking-wider border border-pink-500/30"
-      >{{ tags }}</span
-    >
+      </section>
     }
-  </section>
-  <h3 class="text-2xl font-bold mb-2">{{ items.title }}</h3>
-  <p class="text-indigo-200/50 italic mb-6 line-clamp-3">
-    {{ items.subtitle }}
-  </p>
-  <section class="flex items-center justify-between pt-4 border-t border-white/5 w-full">
-    <section class="flex gap-4">
-      <section class="flex items-center gap-1">
-        <button
-          class="text-xl cursor-pointer hover:scale-[1.2] transition-all duration-100 ease-in"
+    <section class="play-list-art">
+      <figure class="w-full h-full">
+        <img [src]="items.thumbnail" alt="" class="w-full h-full object-cover" />
+      </figure>
+      @switch (items.platform.name) {
+        @case ('Spotify') {
+          <section
+            class="absolute bg-linear-to-r from-[#1DB954] via-[#1ED760] to-[#191414]] top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">Spotify</span>
+          </section>
+        }
+        @case ('Youtube') {
+          <section
+            class="absolute bg-linear-to-r from-red-900 to-red-400 top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">Youtube</span>
+          </section>
+        }
+        @case ('Sound Cloud') {
+          <section
+            class="absolute bg-linear-to-r from-[#FF5500] via-[#333333] to-[#F2F2F2] top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">Sound Cloud</span>
+          </section>
+        }
+        @case ('Apple Music') {
+          <section
+            class="absolute bg-linear-to-r from-[#FF4E6B] via-[#FF0436] to-[#FFFFFF] top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">Apple Music</span>
+          </section>
+        }
+        @case ('Deezer') {
+          <section
+            class="absolute bg-linear-to-r from-[#A238FF] ] to-[#1B191F] top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">Deezer</span>
+          </section>
+        }
+        @case ('Tidal') {
+          <section
+            class="absolute bg-linear-to-r from-[#00FFFF] to-[#000000] top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">Tidal</span>
+          </section>
+        }
+        @case ('Amazon Music') {
+          <section
+            class="absolute bg-linear-to-r from-[#FF6200] via-[#FF9946 ] to-[#000000] top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">Amazon Music</span>
+          </section>
+        }
+        @case ('Youtube Music') {
+          <section
+            class="absolute bg-linear-to-r from-red-900 to-red-400 top-4 left-2 rounded-2xl z-10 tracking-wider p-1"
+          >
+            <span class="p-2 rounded-[2.5rem] text-sm font-bold">YouTube Music</span>
+          </section>
+        }
+      }
+      <section class="play-overlay">
+        <a
+          href="{{ items.playList_Urls }}"
+          target="_blank"
+          class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 cursor-pointer decoration-0"
         >
-          💖
-        </button>
-        <span class="font-bold">{{ items.hearts | CompactNumber }}</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-10 h-10 text-indigo-900 ml-1"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </a>
       </section>
-      <section class="flex items-center gap-1">
-        <span class="text-xl cursor-pointer hover:scale-[1.2] transition-all duration-100 ease-in"
-          >👍</span
+    </section>
+    <section class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
+      @for (tag of items.tags; track tag.id) {
+        <span
+          class="px-4 py-1.5 bg-pink-500/20 text-pink-300 rounded-full text-xs font-bold uppercase tracking-wider border border-pink-500/30"
+          >{{ tag.name }}</span
         >
-        <span class="font-bold">{{ items.likes | CompactNumber }}</span>
-      </section>
-      <!-- For Favorite Functions -->
-      <!-- <button
+      }
+    </section>
+    <h3 class="text-2xl font-bold mb-2">{{ items.title }}</h3>
+    <p class="text-indigo-200/50 italic mb-6 line-clamp-3">
+      {{ items.description }}
+    </p>
+    <section class="flex items-center justify-between pt-4 border-t border-white/5 w-full">
+      <section class="flex gap-4">
+        <section class="flex items-center gap-1">
+          <button
+            class="text-xl cursor-pointer hover:scale-[1.2] transition-all duration-100 ease-in"
+          >
+            💖
+          </button>
+          <span class="font-bold">{{ items.popularity[0].hearts | CompactNumber }}</span>
+        </section>
+        <section class="flex items-center gap-1">
+          <span class="text-xl cursor-pointer hover:scale-[1.2] transition-all duration-100 ease-in"
+            >👍</span
+          >
+          <span class="font-bold">{{ items.popularity[0].likes | CompactNumber }}</span>
+        </section>
+        <!-- For Favorite Functions -->
+        <!-- <button
         class="absolute right-10 cursor-pointer"
         title="Add in Favorite"
         (click)="musicFavorite()"
@@ -140,7 +146,7 @@
           />
         </svg>
       </button> -->
+      </section>
     </section>
   </section>
-</section>
 }

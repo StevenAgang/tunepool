@@ -14,16 +14,14 @@ export class Cards {
   img: string = 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png';
   @Input('background-color') color: string = '';
   @Input('playList') items!: {
+    id: number;
     title: string;
-    subtitle: string;
-    imgSrc: string;
-    tags: string[];
-    hearts: number;
-    likes: number;
-    platform: string;
-    rank: number;
-    bgColor: string;
-    link: string;
+    description: string;
+    playList_Urls: string;
+    thumbnail: string;
+    tags: [{ id: number; name: string }];
+    popularity: [{ playlist_id: number; hearts: number; likes: number; rank: number }];
+    platform: { id: number; name: string };
   };
 
   musicFavorite() {
