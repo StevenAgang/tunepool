@@ -1,0 +1,105 @@
+<app-navbar (openModal)="openModal()" class="flex flex-row justify-center"></app-navbar>
+<header class="text-center px-5">
+  <h2 class="text-5xl font-extrabold mb-6 leading-tight">
+    Weekly <span class="italic font-serif opacity-80">Chart</span> Toppers.
+  </h2>
+  <p class="text-indigo-200/60 max-w-2xl mx-auto text-lg">
+    The community's favorite soundscapes. Vote, share, and discover your next obsession.
+  </p>
+</header>
+<main>
+  @if (post.length) {
+    <section
+      class="mt-10 px-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20"
+    >
+      @for (posts of post; track posts.id) {
+        <app-cards [playList]="posts"></app-cards>
+      }
+    </section>
+  } @else {
+    <section class="w-full text-center my-20">
+      <h1 class="font-extrabold text-4xl leading-tight tracking-wide px-5">
+        Claim your spot as the ultimate
+        <span class="italic font-serif opacity-80">Playlist</span> Sharer.
+      </h1>
+      <p class="leading-tight tracking-wide font-semibold">Weekly ranking updates — stay ahead</p>
+    </section>
+  }
+  <section class="max-w-7xl mx-auto px-10">
+    <form [formGroup]="form" class="w-full flex flex-col gap-5 md:flex-row">
+      <input
+        formControlName="metaData"
+        type="text"
+        name="metaData"
+        placeholder="Search for Title and Description"
+        class="w-full py-2 px-3 tracking-wider rounded-md"
+        (keyup)="getAllPlaylist(true)"
+      />
+      <select
+        formControlName="platform"
+        name=""
+        id=""
+        class="selects"
+        (change)="getAllPlaylist(true)"
+      >
+        <option value="" class="options">All Platform</option>
+        @for (platform of platforms; track platform.id) {
+          <option [value]="platform.id" class="options">{{ platform.name }}</option>
+        }
+      </select>
+      <select
+        formControlName="tags"
+        name=""
+        id=""
+        class="selects thin-scrollbar"
+        (change)="getAllPlaylist(true)"
+      >
+        <option value="" class="options">All Tags</option>
+        @for (tag of tags; track tag.id) {
+          <option [value]="tag.id" class="options">{{ tag.name }}</option>
+        }
+      </select>
+    </form>
+  </section>
+  @if (listing.length) {
+    <section
+      class="mt-10 px-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20 relative"
+    >
+      @for (list of listing; track list.id) {
+        <app-cards [playList]="list"></app-cards>
+      }
+    </section>
+  } @else {
+    <section class="w-full text-center my-20">
+      <h2 class="font-bold px-5 my-70 text-3xl tracking-wider">
+        No playlists yet — start the trend by sharing yours!
+      </h2>
+    </section>
+  }
+  @if (paginationPage.getPage() == true && listing.length > 0) {
+    <section
+      id="loadData"
+      (click)="cursorPagination()"
+      class="pointer-cursor cursor-pointer outline-indigo-900/50 rounded-full w-15 h-15 mx-auto my-5 p-2 flex justify-center shadow-lg transition-transform hover:shadow-2xl hover:scale-105 hover:outline-solid duration-200 bg-indigo-900/20"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 320 512"
+        fill="currentColor"
+        width="50"
+        height="50"
+        class="mx-auto text-indigo-500"
+      >
+        <path
+          d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"
+        />
+      </svg>
+    </section>
+  }
+  <app-modal
+    [tags]="tags"
+    [visible]="modalVisible"
+    (close)="closeModal()"
+    (playlist)="getAllPlaylist(true)"
+  ></app-modal>
+</main>

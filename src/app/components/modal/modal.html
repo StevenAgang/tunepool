@@ -1,0 +1,223 @@
+<section
+  class="fixed inset-0 bg-indigo-950/80 p-4 backdrop-blur-md flex items-center justify-center z-50"
+  [ngClass]="{ 'modal-close': visible }"
+  (click)="closed()"
+>
+  <section
+    class="model-content glass-card w-full max-w-lg rounded-[2.5rem] mx-2 my-5 p-8 shadow-2xl border-indigo-400/20 max-h-[75vh] overflow-y-auto no-scrollbar"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      class="absolute top-6 right-6 text-indigo-300/50 hover:text-white transition-colors cursor-pointer"
+      (click)="closed()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <h1 class="text-sp text-3xl font-extrabold tracking-tighter">
+      Share the
+      <span
+        class="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+        >Vibe</span
+      >
+    </h1>
+    <p class="text-indigo-200/50">Add your playlist to the pool and let the community dive in.</p>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submitPlaylist()"
+      class="flex flex-col rounded-md gap-3 my-5 w-full"
+    >
+      <label for="playList_Urls" class="label-design flex justify-between items-center">
+        Play List Link
+
+        <button
+          data-tooltip-target="tooltip-default"
+          type="button"
+          class="text-indigo-300/50 bg-indigo-950/20 box-border border border-transparent hover:bg-indigo-950/80 focus:ring-4 focus:ring-brand-medium shadow-xs font-extrabold leading-5 rounded-full text-xs px-1 py-1 focus:outline-none"
+        >
+          ?
+        </button>
+
+        <section
+          id="tooltip-default"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-indigo-950/90 rounded-md shadow-xs opacity-0"
+        >
+          <p>
+            Thumbnail will be fetched automatically via the service provider’s API. If unavailable,
+            TunePool will generate one for you.
+          </p>
+          <br />
+          <p>
+            At present, the automatic thumbnail grabber supports YouTube, YouTube Music, Deezer, and
+            Tidal.
+          </p>
+          <br />
+          <p>
+            Supported URL sources include YouTube, YouTube Music, Spotify, SoundCloud, Apple Music,
+            Deezer, Tidal, and Amazon Music.
+          </p>
+
+          <section class="tooltip-arrow" data-popper-arrow></section>
+        </section>
+      </label>
+      <input
+        formControlName="playList_Urls"
+        type="url"
+        name="playList_Urls"
+        id="playList_Urls"
+        [ngClass]="{
+          'input-design': true,
+          'border-red-900!': getPlaylistLink()?.invalid && getPlaylistLink()?.touched,
+        }"
+        placeholder="https://open.spotify.com/playlist/..."
+        required
+      />
+      @if (getPlaylistLink()?.touched && getPlaylistLink()?.invalid) {
+        @if (getPlaylistLink()?.errors?.['required']) {
+          <span class="text-red-400/50 rounded-md text-sm px-2 -mt-2.5 mb-2.5 font-bold"
+            >PlayList link is required</span
+          >
+        }
+
+        @if (getPlaylistLink()?.errors?.['linkValidation']) {
+          <span class="text-red-400/50 rounded-md text-sm px-2 -mt-2.5 mb-2.5 font-bold"
+            >Link is invalid</span
+          >
+        }
+      }
+      <label for="title" class="label-design">playlist title</label>
+      <input
+        formControlName="title"
+        type="text"
+        name="title"
+        placeholder="Midnight Melodies"
+        [ngClass]="{
+          'input-design': true,
+          'border-red-900!': getTitle()?.invalid && getTitle()?.touched,
+        }"
+        class="input-design"
+      />
+      @if (getTitle()?.touched && getTitle()?.invalid) {
+        @if (getTitle()?.errors?.['required']) {
+          <span class="text-red-400/50 rounded-md text-sm px-2 -mt-2.5 mb-2.5 font-bold"
+            >Playlist title is required</span
+          >
+        }
+
+        @if (getTitle()?.errors?.['maxlength']) {
+          <span class="text-red-400/50 rounded-md text-sm px-2 -mt-2.5 mb-2.5 font-bold"
+            >Playlist title must not exceed 20 characters</span
+          >
+        }
+      }
+      @if (tags) {
+        <label class="label-design">Select Mood Tags (Max is Five)</label>
+        <section id="tags" class="flex gap-2 flex-wrap w-full mb-2">
+          @for (tag of tags; track tag.id) {
+            <button
+              type="button"
+              (click)="toggleTag(tag.id)"
+              [ngClass]="{
+                'tag-design': true,
+                active: getSelectedTags().includes(tag.id),
+                'border-2 border-red-900!':
+                  getSelectedTags()?.touched && getSelectedTags()?.invalid,
+              }"
+              [disabled]="maxTags == 5 && !getSelectedTags().includes(tag.id)"
+            >
+              {{ tag.name }}
+            </button>
+          }
+        </section>
+      }
+      <!-- @if (getSelectedTags()?.touched && getSelectedTags()?.invalid) {
+        <span class="text-red-400/50 rounded-md text-sm px-2 -mt-2.5 mb-2.5 font-bold"
+          >Mood tags are required</span
+        >
+      } -->
+      <label for="description" class="label-design">Vibe Description</label>
+      <textarea
+        formControlName="description"
+        id="description"
+        [ngClass]="{
+          'input-design': true,
+          'border-red-900!': getDescription()?.touched && getDescription()?.invalid,
+        }"
+        class="input-design"
+        placeholder="Tell us about the mood..."
+      ></textarea>
+      @if (getDescription()?.touched && getDescription()?.invalid) {
+        @if (getDescription()?.errors?.['required']) {
+          <span class="text-red-400/50 rounded-md text-sm px-2 -mt-2.5 mb-2.5 font-bold"
+            >Description is required</span
+          >
+        }
+
+        @if (getDescription()?.errors?.['maxlength']) {
+          <span class="text-red-400/50 rounded-md text-sm px-2 -mt-2.5 mb-2.5 font-bold"
+            >Vibe Description must not exceed 30 characters.</span
+          >
+        }
+      }
+      <button
+        [disabled]="isLoading()"
+        type="submit"
+        [class]="isLoading() ? 'btn-disable' : 'btn-primary'"
+        class="px-6 py-3 rounded-full font-bold text-md flex items-center gap-2 text-white justify-center tracking-wider"
+      >
+        @if (isLoading()) {
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="60px">
+            <path
+              fill="none"
+              stroke="#f6339a"
+              stroke-width="15"
+              stroke-linecap="round"
+              stroke-dasharray="300 385"
+              stroke-dashoffset="0"
+              d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"
+              data-darkreader-inline-stroke=""
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                calcMode="spline"
+                dur="2"
+                values="685;-685"
+                keySplines="0 0 1 1"
+                repeatCount="indefinite"
+              ></animate>
+            </path>
+          </svg>
+        } @else {
+          <span>Dive In</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20px"
+            height="20px"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        }
+      </button>
+    </form>
+  </section>
+</section>
