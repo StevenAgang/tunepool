@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
 import { Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CompactNumber } from '../../Shared/Pipe/CompactNumber';
-import { PlaylistService } from '../../Service/Playlist/PlaylistService';
+import { CompactNumber } from '../../shared/pipe/compactnumber';
+import { PlaylistService } from '../../service/playlist/playlistservice';
 
 @Component({
   selector: 'app-cards',
   imports: [CommonModule, CompactNumber],
-  templateUrl: './Cards.html',
-  styleUrl: './Cards.css',
+  templateUrl: './cards.html',
+  styleUrl: './cards.css',
 })
 export class Cards {
   favorite: boolean = false;
-  img: string = 'https://admin.lofigirl.com/uploads/main_radio_99bce02a7b.png';
   @Input('background-color') color: string = '';
   @Input('playList') items!: {
     id: number;

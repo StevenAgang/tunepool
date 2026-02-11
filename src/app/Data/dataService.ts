@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AppError } from '../Common/Exception/AppError';
-import { DataServiceInterface } from '../Interface/Data/DataServiceInterface';
-import { PaginationPage } from '../Shared/PaginationPage';
+import { AppError } from '../common/exception/apperror';
+import { DataServiceInterface } from '../interface/data/dataserviceinterface';
+import { PaginationPage } from '../shared/paginationpage';
 import { FormGroup } from '@angular/forms';
-import { ApiResponseInterface } from '../Interface/ApiResponse/ApiResponseInterface';
+import { ApiResponseInterface } from '../interface/apiresponse/apiresponseinterface';
 import {
   PlatformInterface,
   PlaylistInterface,
   TagsInterface,
-} from '../Interface/Playlist/PlaylistInterface';
+} from '../interface/playlist/playlistinterface';
 
 export const API_URL = new InjectionToken<string>('API_URL');
 

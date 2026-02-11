@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { TagsInterface } from '../../Interface/Playlist/PlaylistInterface';
+import { TagsInterface } from '../../interface/playlist/playlistinterface';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PlaylistValidation } from '../../Shared/Validation/Playlist/PlaylistValidation';
-import { PlaylistService } from '../../Service/Playlist/PlaylistService';
+import { PlaylistValidation } from '../../shared/validation/playlist/playlistvalidation';
+import { PlaylistService } from '../../service/playlist/playlistservice';
 import { ToastrService } from 'ngx-toastr';
-import { ApiResponseInterface } from '../../Interface/ApiResponse/ApiResponseInterface';
+import { ApiResponseInterface } from '../../interface/apiresponse/apiresponseinterface';
 
 @Component({
   selector: 'app-modal',
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './Modal.html',
-  styleUrl: './Modal.css',
+  templateUrl: './modal.html',
+  styleUrl: './modal.css',
 })
 export class Modal {
   maxTags: number = 0;

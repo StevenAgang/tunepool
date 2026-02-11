@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_URL, DataService } from '../../Data/DataService';
-import { PaginationPage } from '../../Shared/PaginationPage';
+import { API_URL, DataService } from '../../data/dataservice';
+import { PaginationPage } from '../../shared/paginationpage';
 
 @Injectable({
   providedIn: 'root',

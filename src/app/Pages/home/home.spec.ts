@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Home } from './Home';
+import { Home } from './home';
 
 describe('Home', () => {
   let component: Home;

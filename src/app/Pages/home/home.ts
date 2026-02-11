@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { Navbar } from '../../Components/Navbar/Navbar';
-import { Cards } from '../../Components/Cards/Cards';
-import { Modal } from '../../Components/Modal/Modal';
-import { PlaylistService } from '../../Service/Playlist/PlaylistService';
-import { PlatformInterface, TagsInterface } from '../../Interface/Playlist/PlaylistInterface';
-import { PaginationPage } from '../../Shared/PaginationPage';
+import { Navbar } from '../../components/navbar/navbar';
+import { Cards } from '../../components/cards/cards';
+import { Modal } from '../../components/modal/modal';
+import { PlaylistService } from '../../service/playlist/playlistservice';
+import { PlatformInterface, TagsInterface } from '../../interface/playlist/playlistinterface';
+import { PaginationPage } from '../../shared/paginationpage';
 import { FormControl, FormGroup, ɵInternalFormsSharedModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   imports: [Navbar, Cards, Modal, ɵInternalFormsSharedModule, ReactiveFormsModule],
-  templateUrl: './Home.html',
-  styleUrl: './Home.css',
+  templateUrl: './home.html',
+  styleUrl: './home.css',
 })
 export class Home {
   protected post: Array<{

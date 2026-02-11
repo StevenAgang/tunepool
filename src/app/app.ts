@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { Home } from './Pages/Home/Home';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

@@ -3,8 +3,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 @Component({
   selector: 'app-navbar',
   imports: [],
-  templateUrl: './Navbar.html',
-  styleUrl: './Navbar.css',
+  templateUrl: './navbar.html',
+  styleUrl: './navbar.css',
 })
 export class Navbar {
   @Output() openModal = new EventEmitter<void>();
