@@ -5,9 +5,11 @@ import {
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
-import { API_URL } from './Data/dataService';
+import { API_URL } from './Data/DataService';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +17,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    { provide: API_URL, useValue: 'https://localhost:7278/playList/' },
+    provideToastr({ positionClass: 'toast-bottom-right', timeOut: 3000 }),
+    provideAnimations(),
+    { provide: API_URL, useValue: 'http://192.168.31.190:7278/playList/' },
   ],
 };

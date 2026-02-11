@@ -1,4 +1,4 @@
-export interface apiResponseInterface<T> {
+export interface ApiResponseInterface<T> {
   status: number;
   success: boolean;
   message?: string;

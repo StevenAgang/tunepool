@@ -105,7 +105,7 @@
         >
       }
     </section>
-    <h3 class="text-2xl font-bold mb-2">{{ items.title }}</h3>
+    <h3 class="text-2xl font-bold mb-2 break-keep! line-clamp-3!">{{ items.title }}</h3>
     <p class="text-indigo-200/50 italic mb-6 line-clamp-3">
       {{ items.description }}
     </p>
@@ -114,15 +114,19 @@
         <section class="flex items-center gap-1">
           <button
             class="text-xl cursor-pointer hover:scale-[1.2] transition-all duration-100 ease-in"
+            (click)="Popularity('hearts')"
           >
             💖
           </button>
           <span class="font-bold">{{ items.popularity[0].hearts | CompactNumber }}</span>
         </section>
         <section class="flex items-center gap-1">
-          <span class="text-xl cursor-pointer hover:scale-[1.2] transition-all duration-100 ease-in"
-            >👍</span
+          <button
+            class="text-xl cursor-pointer hover:scale-[1.2] transition-all duration-100 ease-in"
+            (click)="Popularity('likes')"
           >
+            👍
+          </button>
           <span class="font-bold">{{ items.popularity[0].likes | CompactNumber }}</span>
         </section>
         <!-- For Favorite Functions -->

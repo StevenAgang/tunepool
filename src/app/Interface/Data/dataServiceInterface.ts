@@ -1,7 +1,9 @@
-export interface dataServiceInterface {
+export interface DataServiceInterface {
   getRanking(): object;
   getAll(lastId: number): object;
   getAllTags(): object;
-  likePlaylist(data: object): object;
-  heartPlaylist(data: object): object;
+  likePlaylist(id: number): object;
+  heartPlaylist(id: number): object;
+  unlikePlaylist(id: number): object;
+  unheartPlaylist(id: number): object;
 }

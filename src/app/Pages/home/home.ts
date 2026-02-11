@@ -1,17 +1,18 @@
-import { Component, inject } from '@angular/core';
-import { Navbar } from '../../Components/navbar/navbar';
-import { Cards } from '../../Components/cards/cards';
-import { Modal } from '../../Components/modal/modal';
-import { PlaylistService } from '../../Service/Playlist/playlistService';
-import { apiResponseInterface } from '../../Interface/ApiResponse/apiResponseInterface';
-import { playlistInterface, tagsInterface } from '../../Interface/Playlist/playlistInterface';
+import { Component } from '@angular/core';
+import { Navbar } from '../../Components/Navbar/Navbar';
+import { Cards } from '../../Components/Cards/Cards';
+import { Modal } from '../../Components/Modal/Modal';
+import { PlaylistService } from '../../Service/Playlist/PlaylistService';
+import { PlatformInterface, TagsInterface } from '../../Interface/Playlist/PlaylistInterface';
 import { PaginationPage } from '../../Shared/PaginationPage';
+import { FormControl, FormGroup, ɵInternalFormsSharedModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  imports: [Navbar, Cards, Modal],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
+  imports: [Navbar, Cards, Modal, ɵInternalFormsSharedModule, ReactiveFormsModule],
+  templateUrl: './Home.html',
+  styleUrl: './Home.css',
 })
 export class Home {
   protected post: Array<{
@@ -36,8 +37,8 @@ export class Home {
     platform: { id: number; name: string };
   }> = [];
 
-  protected tags: Array<{ id: number; name: string }> = [];
-
+  protected tags: TagsInterface[] = [];
+  protected platforms: PlatformInterface[] = [];
   modalVisible: boolean = true;
 
   openModal() {
@@ -52,38 +53,65 @@ export class Home {
 
   pagination: Array<number> = [1, 2, 3, 4, 5, 6, 8, 9, 10];
 
+  form = new FormGroup({
+    metaData: new FormControl(''),
+    platform: new FormControl(''),
+    tags: new FormControl(''),
+  });
+
   constructor(
     private client: PlaylistService,
     public paginationPage: PaginationPage,
   ) {}
 
   ngOnInit() {
+    this.getPlaylistRank();
+    this.getAllPlaylist();
+    this.getAllTags();
+    this.SupportedPlatform();
+  }
+
+  getAllPlaylist(refresh?: boolean) {
+    if (refresh) {
+      this.setLastPage(0, true);
+    }
+    console.log(this.form.value);
+    this.client.getAll(this.paginationPage.getId(), this.form).subscribe((response) => {
+      this.listing = response.content || [];
+      let lastPage = response.lastPage || false;
+      let lastId = this.listing.at(-1)?.id || 0;
+      this.setLastPage(lastId, lastPage);
+    });
+  }
+
+  getPlaylistRank() {
     this.client.getRanking().subscribe((response) => {
-      this.post = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
+      this.post = response.content || [];
+      // this.post.sort((a, b) => b.id - a.id);
     });
+  }
 
-    this.client.getAll(this.paginationPage.getId()).subscribe((response) => {
-      this.listing = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
-      this.paginationPage.setId(this.listing.length || 0);
-    });
-
-    this.client.getAllTags().subscribe((response) => {
-      this.tags = (response as apiResponseInterface<Array<tagsInterface>>).content || [];
+  getAllTags() {
+    this.client.getAllTags().subscribe((response) => (this.tags = response.content || []));
+  }
+  SupportedPlatform() {
+    this.client.getAllPlatform().subscribe((response) => {
+      this.platforms = response.content || [];
     });
   }
 
   cursorPagination() {
-    this.client.getAll(this.paginationPage.getId()).subscribe((response) => {
-      var newListing = (response as apiResponseInterface<Array<playlistInterface>>).content || [];
-      var lastPage = (response as apiResponseInterface<Array<playlistInterface>>).lastPage || false;
+    this.client.getAll(this.paginationPage.getId(), this.form).subscribe((response) => {
+      var newListing = response.content || [];
+      var lastPage = response.lastPage || false;
       this.listing = [...this.listing, ...newListing];
-      this.paginationPage.setId(this.listing.length || 0);
-
-      console.log((response as apiResponseInterface<Array<playlistInterface>>).lastPage);
-      if (lastPage) {
-        this.paginationPage.setPage(true);
-        return;
-      }
+      let lastId = this.listing.at(-1)?.id || 0;
+      this.setLastPage(lastId, lastPage);
     });
+  }
+
+  setLastPage(id: number, status: boolean) {
+    this.paginationPage.setId(id);
+    this.paginationPage.setPage(status);
   }
 }

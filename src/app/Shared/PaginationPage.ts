@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class PaginationPage {
   private lastId: number = 0;
-  private lastPage: boolean = false;
+  private lastPage: boolean = true;
 
   setId(id: number) {
     this.lastId = id;

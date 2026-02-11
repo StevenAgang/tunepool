@@ -1,4 +1,4 @@
-export interface playlistInterface {
+export interface PlaylistInterface {
   id: number;
   title: string;
   description: string;
@@ -10,7 +10,12 @@ export interface playlistInterface {
   platform: { id: number; name: string };
 }
 
-export interface tagsInterface {
+export interface TagsInterface {
+  id: number;
+  name: string;
+}
+
+export interface PlatformInterface {
   id: number;
   name: string;
 }

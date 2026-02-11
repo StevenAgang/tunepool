@@ -8,6 +8,9 @@
     min-height: 100vh;
   }
 
+  .btn-disable {
+    @apply bg-gray-900/50;
+  }
   .btn-primary {
     @apply bg-linear-to-r from-[#6366f1] to-[#a855f7]
     shadow-[0_8px_25px_rgba(99,102,241,0.6)]
@@ -131,10 +134,27 @@
     uppercase
     hover:scale-[0.9];
   }
+  .options {
+    @apply font-medium
+    tracking-wider;
+  }
+  .selects {
+    @apply py-2 px-3 tracking-wider rounded-md font-medium;
+  }
 }
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+.thin-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background-color: rgb(44, 44, 44);
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(204, 204, 204);
+  border-radius: 2px;
 }
 
 @keyframes firstRank {
@@ -148,11 +168,30 @@
 
 input,
 textarea {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: white !important;
   outline: none !important;
   transition: all 0.2s ease;
+}
+
+select {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: white;
+  outline: none !important;
+  transition: all 0.2s ease;
+}
+
+select:hover {
+  border-color: #818cf8 !important;
+  background: rbga(255, 255, 255, 0.08) !important;
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.1);
+}
+
+option {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 input:focus,
