@@ -75,7 +75,6 @@ export class Home {
     if (refresh) {
       this.setLastPage(0, true);
     }
-    console.log(this.form.value);
     this.client.getAll(this.paginationPage.getId(), this.form).subscribe((response) => {
       this.listing = response.content || [];
       let lastPage = response.lastPage || false;

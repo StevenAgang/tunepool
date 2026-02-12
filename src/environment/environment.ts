@@ -1,5 +1,4 @@
-
- export const Environment = {
-    production: true,
-    identity: 'undefined'
- };
+export const Environment = {
+  production: false,
+  identity: 'undefined',
+};

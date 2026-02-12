@@ -96,7 +96,4 @@ export class Modal {
   closed() {
     this.close.emit();
   }
-  ngOnInit() {
-    console.log(this.tags);
-  }
 }

@@ -30,8 +30,6 @@ export class Cards {
     const playlist = localStorage.getItem(`${this.items.popularity[0].playlist_id}`);
     const parsedPlaylist = playlist ? JSON.parse(playlist) : null;
 
-    console.log(typeof parsedPlaylist);
-
     if (playlist != null) {
       if (parsedPlaylist.likes != 0 && type == 'likes') {
         this.Emote(parsedPlaylist, 'likes', 'decrement', 'unlikePlaylist');
