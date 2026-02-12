@@ -5,13 +5,13 @@ export class PlaylistValidation {
     if (!control.value) return null;
 
     const patterns = [
-      /^https:\/\/www\.youtube\.com\/playlist/i,
+      /^https:\/\/(?:www.)?youtube\.com\/playlist/i,
       /^https:\/\/music\.youtube\.com\/playlist/i,
       /^https:\/\/open\.spotify\.com\/playlist/i,
-      /^https:\/\/soundcloud/i,
+      /^https:\/\/(?:www.)?soundcloud/i,
       /^https:\/\/music\.apple\.com(?:\/[a-z]{2})?\/playlist/i,
-      /^https:\/\/www\.deezer\.com(?:\/[a-z]{2})?\/playlist/i,
-      /^https:\/\/tidal\.com\/playlist/i,
+      /^https:\/\/(?:www.)?deezer\.com(?:\/[a-z]{2})?\/playlist/i,
+      /^https:\/\/(?:www.)?tidal\.com\/playlist/i,
       /^https:\/\/music\.amazon\.com\/user-playlist/i,
     ];
     for (let pattern = 0; pattern < patterns.length; pattern++) {
