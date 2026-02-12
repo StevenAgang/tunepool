@@ -20,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([Interceptor])),
     provideToastr({ positionClass: 'toast-bottom-right', timeOut: 3000 }),
     provideAnimations(),
-    { provide: API_URL, useValue: 'http://192.168.31.190:7278/playList/' },
+    { provide: API_URL, useValue: 'http://www.tunepool.somee.com/playList/' },
   ],
 };
