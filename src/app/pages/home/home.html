@@ -16,6 +16,30 @@
         <app-cards [playList]="posts"></app-cards>
       }
     </section>
+  } @else if (leaderBoardLoader()) {
+    <section class="flex justify-center my-15">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="10rem">
+        <path
+          fill="none"
+          stroke="#615FFF"
+          stroke-width="15"
+          stroke-linecap="round"
+          stroke-dasharray="300 385"
+          stroke-dashoffset="0"
+          d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"
+          data-darkreader-inline-stroke=""
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            calcMode="spline"
+            dur="2"
+            values="685;-685"
+            keySplines="0 0 1 1"
+            repeatCount="indefinite"
+          ></animate>
+        </path>
+      </svg>
+    </section>
   } @else {
     <section class="w-full text-center my-20">
       <h1 class="font-extrabold text-4xl leading-tight tracking-wide px-5">
@@ -68,6 +92,30 @@
       @for (list of listing; track list.id) {
         <app-cards [playList]="list"></app-cards>
       }
+    </section>
+  } @else if (viewLoader()) {
+    <section class="flex justify-center my-25">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" width="10rem">
+        <path
+          fill="none"
+          stroke="#615FFF"
+          stroke-width="15"
+          stroke-linecap="round"
+          stroke-dasharray="300 385"
+          stroke-dashoffset="0"
+          d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"
+          data-darkreader-inline-stroke=""
+        >
+          <animate
+            attributeName="stroke-dashoffset"
+            calcMode="spline"
+            dur="2"
+            values="685;-685"
+            keySplines="0 0 1 1"
+            repeatCount="indefinite"
+          ></animate>
+        </path>
+      </svg>
     </section>
   } @else {
     <section class="w-full text-center my-20">

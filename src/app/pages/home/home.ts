@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 import { Cards } from '../../components/cards/cards';
 import { Modal } from '../../components/modal/modal';
 import { PlaylistService } from '../../service/playlist/playlistservice';
-import { PlatformInterface, TagsInterface } from '../../interface/playlist/playlistinterface';
+import {
+  PlatformInterface,
+  PlaylistInterface,
+  TagsInterface,
+} from '../../interface/playlist/playlistinterface';
 import { PaginationPage } from '../../shared/paginationpage';
 import { FormControl, FormGroup, ɵInternalFormsSharedModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ApiResponseInterface } from '../../interface/apiresponse/apiresponseinterface';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +20,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './home.css',
 })
 export class Home {
+  viewLoader = signal(false);
+  leaderBoardLoader = signal(false);
+
   protected post: Array<{
     id: number;
     title: string;
@@ -65,6 +73,8 @@ export class Home {
   ) {}
 
   ngOnInit() {
+    this.viewLoader.set(true);
+    this.leaderBoardLoader.set(true);
     this.getPlaylistRank();
     this.getAllPlaylist();
     this.getAllTags();
@@ -75,18 +85,34 @@ export class Home {
     if (refresh) {
       this.setLastPage(0, true);
     }
-    this.client.getAll(this.paginationPage.getId(), this.form).subscribe((response) => {
-      this.listing = response.content || [];
-      let lastPage = response.lastPage || false;
-      let lastId = this.listing.at(-1)?.id || 0;
-      this.setLastPage(lastId, lastPage);
+    this.client.getAll(this.paginationPage.getId(), this.form).subscribe({
+      next: (response: ApiResponseInterface<Array<PlaylistInterface>>) => {
+        this.listing = response.content || [];
+        let lastPage = response.lastPage || false;
+        let lastId = this.listing.at(-1)?.id || 0;
+        this.setLastPage(lastId, lastPage);
+      },
+      error: () => {
+        this.viewLoader.set(false);
+      },
+      complete: () => {
+        this.viewLoader.set(false);
+      },
     });
   }
 
   getPlaylistRank() {
-    this.client.getRanking().subscribe((response) => {
-      this.post = response.content || [];
-      // this.post.sort((a, b) => b.id - a.id);
+    this.client.getRanking().subscribe({
+      next: (response: ApiResponseInterface<Array<PlaylistInterface>>) => {
+        this.post = response.content || [];
+        this.leaderBoardLoader.set(false);
+      },
+      error: () => {
+        this.leaderBoardLoader.set(false);
+      },
+      complete: () => {
+        this.leaderBoardLoader.set(false);
+      },
     });
   }
 
