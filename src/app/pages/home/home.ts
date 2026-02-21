@@ -12,10 +12,11 @@ import { PaginationPage } from '../../shared/paginationpage';
 import { FormControl, FormGroup, ɵInternalFormsSharedModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiResponseInterface } from '../../interface/apiresponse/apiresponseinterface';
+import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [Navbar, Cards, Modal, ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [Navbar, Cards, Modal, Footer, ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
